@@ -1,0 +1,25 @@
+CUDA_VISIBLE_DEVICES=7 python   /gaojiawei/wjl/dataset/ubc/StableAnimator/inference_op.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --output_dir="./basic_infer/44" \
+ --validation_control_folder="./inference/case-16/poses22" \
+ --validation_image="/gaojiawei/wjl/StableAnimator/inference/case-18/images/111.png" \
+ --validation_image_mask="/gaojiawei/wjl/StableAnimator/inference/case-18/faces/111.png" \
+ --validation_control_mask_folder="./inference/case-16/faces" \
+ --width=512 \
+ --height=512 \
+ --guidance_scale=4 \
+ --num_inference_steps=60 \
+ --posenet_model_name_or_path="./checkpoints/Animation/pose_net.pth" \
+ --face_encoder_model_name_or_path="./checkpoints/Animation/face_encoder.pth" \
+ --unet_model_name_or_path="./checkpoints/Animation/unet.pth" \
+ --face_embedding_extractor_weight_path="./checkpoints/Animation/glintr100_torch.pth" \
+ --num_optimization_iter=3 \
+ --start_refine_step=0 \
+ --end_refine_step=20 \
+ --max_frame_num=10000 \
+ --batch_frames=50 \
+ --overlap=4 \
+ --noise_aug_strength=0.02 \
+ --frames_overlap=4 \
+ --gradient_checkpointing
+ffmpeg -framerate 30 -i /gaojiawei/wjl/StableAnimator/basic_infer/44/frames/frame_%d.png -c:v libx264 -pix_fmt yuv420p /gaojiawei/wjl/StableAnimator/basic_infer/44/1.mp4

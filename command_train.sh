@@ -1,0 +1,23 @@
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && \
+CUDA_VISIBLE_DEVICES=4,5 accelerate launch train.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --output_dir="./checkpoints/Animationputong" \
+ --data_root_path="./animation_data" \
+ --rec_data_path="./animation_data/video_dec_path.txt" \
+ --vec_data_path="./animation_data/video_dec_path.txt" \
+ --validation_image_folder="/gaojiawei/wjl/StableAnimator/animation_data/cec/30057/images" \
+ --validation_control_folder="/gaojiawei/wjl/StableAnimator/animation_data/cec/30057/poses" \
+ --validation_image="/gaojiawei/wjl/StableAnimator/animation_data/cec/30057/images/frame_0.png" \
+ --num_workers=14 \
+ --lr_warmup_steps=500 \
+ --sample_n_frames=8 \
+ --learning_rate=1e-6 \
+ --per_gpu_batch_size=1 \
+ --num_train_epochs=400 \
+ --mixed_precision="bf16" \
+ --gradient_accumulation_steps=1 \
+ --checkpointing_steps=500 \
+ --validation_steps=50 \
+ --gradient_checkpointing \
+ --checkpoints_total_limit=20 \
+ --resume_from_checkpoint="latest"

@@ -1,0 +1,23 @@
+CUDA_VISIBLE_DEVICES=4,3,2,1,0 accelerate launch train_single.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --output_dir="./checkpoints/Animation1" \
+ --data_root_path="./animation_data/rec" \
+ --data_path="./animation_data/video_rec_path.txt" \
+ --dataset_width=512 \
+ --dataset_height=512 \
+ --validation_image_folder="./validation/01032/images" \
+ --validation_control_folder="./validation/01032/poses" \
+ --validation_image="./validation/01032/images/frame_0.png" \
+ --num_workers=8 \
+ --lr_warmup_steps=500 \
+ --sample_n_frames=24 \
+ --learning_rate=1e-6 \
+ --per_gpu_batch_size=1 \
+ --num_train_epochs=200 \
+ --mixed_precision="bf16" \
+ --gradient_accumulation_steps=1 \
+ --checkpointing_steps=5 \
+ --validation_steps=2000000 \
+ --gradient_checkpointing \
+ --checkpoints_total_limit=5000 \
+ --resume_from_checkpoint="latest"

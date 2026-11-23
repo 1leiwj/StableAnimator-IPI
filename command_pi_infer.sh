@@ -1,0 +1,24 @@
+CUDA_VISIBLE_DEVICES=0 python inference_ipi2.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --output_dir="./basic_infer/a1" \
+ --validation_control_folder="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008/poses" \
+ --validation_image="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008.jpg" \
+ --driving_video_folder="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008/images" \
+ --pose_data_path="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008/poses_dense133.npy" \
+ --width=512 \
+ --height=768 \
+ --is_statue \
+ --guidance_scale=3\
+ --motion_bucket_id=128 \
+ --num_inference_steps=30 \
+ --posenet_model_name_or_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi_3/checkpoint-145000/pose_net-145000.pth" \
+ --face_encoder_model_name_or_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi_3/checkpoint-145000/face_encoder-145000.pth" \
+ --unet_model_name_or_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi_3/checkpoint-145000/unet-145000.pth" \
+ --ipi_model_name_or_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi_3/checkpoint-145000/ipi_adapter-145000.pth" \
+ --tile_size=20 \
+ --overlap=10\
+ --noise_aug_strength=0.01 \
+ --frames_overlap=6 \
+ --decode_chunk_size=14 \
+ --gradient_checkpointing
+ffmpeg -framerate 24 -i /gaojiawei/wjl/StableAnimator/basic_infer/a1/animated_images/frame_%d.png -c:v libx264 -pix_fmt yuv420p /gaojiawei/wjl/StableAnimator/basic_infer/a1/a24.mp4

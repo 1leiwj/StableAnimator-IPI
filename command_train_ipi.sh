@@ -1,0 +1,23 @@
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && \
+CUDA_VISIBLE_DEVICES=0,1,2,3,4 accelerate launch train_ipicopy.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --output_dir="./checkpoints/Animation_ipi_fi" \
+ --data_root_path="./animation_data" \
+ --rec_data_path="./animation_data/video_eec_path.txt" \
+ --vec_data_path="./animation_data/video_cec_path.txt" \
+ --validation_image_folder="./validation/ground_truth" \
+ --validation_control_folder="./validation/poses" \
+ --validation_image="./validation/reference.png" \
+ --num_workers=8 \
+ --lr_warmup_steps=50 \
+ --sample_n_frames=10 \
+ --learning_rate=1e-5 \
+ --per_gpu_batch_size=1 \
+ --num_train_epochs=200 \
+ --mixed_precision="bf16" \
+ --gradient_accumulation_steps=1 \
+ --checkpointing_steps=500\
+ --validation_steps=2000000 \
+ --gradient_checkpointing \
+ --checkpoints_total_limit=5000 \
+ --resume_from_checkpoint="latest"

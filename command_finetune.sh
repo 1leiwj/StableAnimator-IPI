@@ -1,0 +1,26 @@
+CUDA_VISIBLE_DEVICES=2,3 accelerate launch --main_process_port 1223 train.py \
+ --pretrained_model_name_or_path="./checkpoints/stable-video-diffusion-img2vid-xt" \
+ --finetune_mode=True \
+ --posenet_model_finetune_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi12/checkpoint-39500/pose_net-39500.pth" \
+ --face_encoder_finetune_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi12/checkpoint-39500/face_encoder-39500.pth" \
+ --unet_model_finetune_path="/gaojiawei/wjl/StableAnimator/checkpoints/Animation_ipi12/checkpoint-39500/unet-39500.pth" \
+ --output_dir="./checkpoints/Animation_4basic" \
+ --data_root_path="./animation_data" \
+ --rec_data_path="./animation_data/video_dec_path.txt" \
+ --vec_data_path="./animation_data/video_dec_path.txt" \
+ --validation_image_folder="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008/images" \
+ --validation_control_folder="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008/poses" \
+ --validation_image="/gaojiawei/wjl/StableAnimator/basic_infer/ces/30008.jpg" \
+ --num_workers=8 \
+ --lr_warmup_steps=500 \
+ --sample_n_frames=16 \
+ --learning_rate=1e-5 \
+ --per_gpu_batch_size=1 \
+ --num_train_epochs=100 \
+ --mixed_precision="bf16" \
+ --gradient_accumulation_steps=1 \
+ --checkpointing_steps=500 \
+ --validation_steps=1000 \
+ --gradient_checkpointing \
+ --checkpoints_total_limit=10 \
+ --resume_from_checkpoint="latest"
